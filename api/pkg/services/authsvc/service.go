@@ -10,8 +10,8 @@ import (
 
 	"github.com/cnf/structhash"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/shellhub-io/shellhub/pkg/models"
 	"github.com/shellhub-io/shellhub/api/pkg/store"
+	"github.com/shellhub-io/shellhub/pkg/models"
 )
 
 type Service interface {
@@ -45,7 +45,10 @@ func (s *service) AuthDevice(ctx context.Context, req *models.DeviceAuthRequest)
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, models.DeviceAuthClaims{
-		UID: string(uid[:]),
+		UID: hex.EncodeToString(uid[:]),
+		AuthClaims: models.AuthClaims{
+			Claims: "device",
+		},
 	})
 
 	tokenStr, err := token.SignedString(s.privKey)
@@ -86,6 +89,9 @@ func (s *service) AuthUser(ctx context.Context, req models.UserAuthRequest) (*mo
 			Name:   user.Username,
 			Admin:  true,
 			Tenant: user.TenantID,
+			AuthClaims: models.AuthClaims{
+				Claims: "user",
+			},
 			StandardClaims: jwt.StandardClaims{
 				ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 			},
