@@ -32,6 +32,8 @@ services:
       context: gateway
     environment:
       - SHELLHUB_VERSION=latest
+    ports:
+      - '80:80'
   agent:
     image: shellhub-agent
     build:
