@@ -2,7 +2,6 @@ package models
 
 import (
 	"time"
-
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
