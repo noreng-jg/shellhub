@@ -51,10 +51,13 @@ func (s *service) RenameDevice(ctx context.Context, uid models.UID, name string,
 	device, _ := s.store.GetDeviceByUid(ctx, uid, tenant)
 	validate := validator.New()
 	if device != nil {
-		errs := validate.Var(name, "required,hostname_rfc1123")
-		if device.Name != name && errs == nil {
-			return s.store.RenameDevice(ctx, uid, name)
-		}
+		if device.Name != name{	
+			device.Name = name
+			errs := validate.Struct(device)	
+			if errs == nil{
+					return s.store.RenameDevice(ctx, uid, name)
+				}		
+			}
 	}	
 	return UnauthorizedErr
 }
