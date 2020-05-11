@@ -3,9 +3,9 @@ package deviceadm
 import (
 	"context"
 	"errors"
-	"gopkg.in/go-playground/validator.v9"
 	"github.com/shellhub-io/shellhub/api/pkg/store"
 	"github.com/shellhub-io/shellhub/pkg/models"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 var UnauthorizedErr = errors.New("unauthorized")
@@ -49,11 +49,11 @@ func (s *service) DeleteDevice(ctx context.Context, uid models.UID, tenant strin
 
 func (s *service) RenameDevice(ctx context.Context, uid models.UID, name string, tenant string) error {
 	device, _ := s.store.GetDeviceByUid(ctx, uid, tenant)
-	validate := validator.New()	
+	validate := validator.New()
 	if device != nil {
-		errs:=validate.Var(name, "required,hostname_rfc1123")
-		if device.Name != name && errs==nil {
-			return s.store.RenameDevice(ctx, uid, name)	
+		errs := validate.Var(name, "required,hostname_rfc1123")
+		if device.Name != name && errs == nil {
+			return s.store.RenameDevice(ctx, uid, name)
 		}
 	}	
 	return UnauthorizedErr
