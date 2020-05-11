@@ -55,7 +55,7 @@ func (s *service) RenameDevice(ctx context.Context, uid models.UID, name string,
 		if device.Name != name && errs == nil {
 			return s.store.RenameDevice(ctx, uid, name)
 		}
-	}
+	}	
 	return UnauthorizedErr
 }
 

@@ -15,6 +15,7 @@ require (
 	go.mongodb.org/mongo-driver v1.3.1
 	golang.org/x/crypto v0.0.0-20200317142112-1b76d66859c6
 	golang.org/x/net v0.0.0-20200319234117-63522dbf7eec
+	gopkg.in/go-playground/validator.v9 v9.31.0
 )
 
 replace github.com/shellhub-io/shellhub => ../
